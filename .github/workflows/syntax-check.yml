@@ -1,0 +1,26 @@
+# Syntax-check Python solutions and confirm the README index matches the tree.
+# Python is the only language in this repository. compileall is stdlib-only,
+# so the job does not install packages.
+
+name: Syntax check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    name: Python syntax and index
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax-check Python solutions
+        run: python3 -m compileall -q "Data Structures & Algorithms" scripts
+
+      - name: Index matches the tree
+        run: python3 scripts/gen_index.py --check
